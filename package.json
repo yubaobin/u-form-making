@@ -1,8 +1,8 @@
 {
-  "name": "form-making",
-  "description": "基于Vue,ElementUI开发的一款表单设计器，提高表单开发效率的利器，让开发者从枯燥的表单代码编写中解放出来",
-  "version": "1.2.0",
-  "author": "GavinZhulei",
+  "name": "u-form-making",
+  "description": "基于form-making二次开发",
+  "version": "1.0.0",
+  "author": "ybb",
   "license": "LGPL",
   "keywords": [
     "component",
