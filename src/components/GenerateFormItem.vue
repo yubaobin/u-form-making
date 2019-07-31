@@ -1,6 +1,6 @@
 <template>
   <el-form-item :label="widget.name" :prop="widget.model">
-    <template v-if="widget.type == 'input'" >
+    <template v-if="widget.type == 'text'" >
       <el-input 
         v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
         :type="widget.options.dataType"
@@ -18,7 +18,16 @@
         :style="{width: widget.options.width}"
       ></el-input>
     </template>
-
+    
+    <template v-if="widget.type == 'password'">
+      <el-input type="password"
+                v-model="dataModel"
+                :disabled="widget.options.disabled"
+                :placeholder="widget.options.placeholder"
+                :style="{width: widget.options.width}"
+      ></el-input>
+    </template>
+    
     <template v-if="widget.type == 'textarea'">
       <el-input type="textarea" :rows="5"
         v-model="dataModel"
@@ -121,7 +130,7 @@
       ></el-color-picker>
     </template>
 
-    <template v-if="widget.type == 'select'">
+    <template v-if="widget.type == 'list'">
       <el-select
         v-model="dataModel"
         :disabled="widget.options.disabled"
@@ -156,7 +165,7 @@
       ></el-slider>
     </template>
 
-    <template v-if="widget.type=='imgupload'">
+    <template v-if="widget.type=='image'">
       <fm-upload
         v-model="dataModel"
         :disabled="widget.options.disabled"
@@ -176,7 +185,7 @@
       </fm-upload>
     </template>
 
-    <template v-if="widget.type == 'editor'">
+    <template v-if="widget.type == 'umeditor'">
       <fm-editor
         v-model="dataModel"
         :width="widget.options.width"

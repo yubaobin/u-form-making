@@ -12,7 +12,7 @@
               :move="handleMove"
             >
               
-              <li class="form-edit-widget-label" v-for="(item, index) in basicComponents" :key="index">
+              <li class="form-edit-widget-label" v-for="(item, index) in basicComponents" :key="index" v-if="!item.hidden">
                 <a>
                   <i class="icon iconfont" :class="item.icon"></i>
                   <span>{{item.name}}</span>
@@ -28,29 +28,28 @@
               :move="handleMove"
             >
               
-              <li class="form-edit-widget-label" v-for="(item, index) in advanceComponents" :key="index">
+              <li class="form-edit-widget-label" v-for="(item, index) in advanceComponents" :key="index" v-if="!item.hidden">
                 <a>
                   <i class="icon iconfont" :class="item.icon"></i>
                   <span>{{item.name}}</span>
                 </a>
               </li>
             </draggable>
-            
-            <div class="widget-cate">布局字段</div>
-            <draggable tag="ul" :list="layoutComponents"
-              v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
-              @end="handleMoveEnd"
-              @start="handleMoveStart"
-              :move="handleMove"
-            >
-              
-              <li class="form-edit-widget-label data-grid" v-for="(item, index) in layoutComponents" :key="index">
-                <a>
-                  <i class="icon iconfont" :class="item.icon"></i>
-                  <span>{{item.name}}</span>
-                </a>
-              </li>
-            </draggable>
+            <template v-if="layoutList">
+              <div class="widget-cate">布局字段</div>
+              <draggable tag="ul" :list="layoutComponents"
+                v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
+                @end="handleMoveEnd"
+                @start="handleMoveStart"
+                :move="handleMove">
+                <li class="form-edit-widget-label data-grid" v-for="(item, index) in layoutComponents" :key="index" v-if="!item.hidden">
+                  <a>
+                    <i class="icon iconfont" :class="item.icon"></i>
+                    <span>{{item.name}}</span>
+                  </a>
+                </li>
+              </draggable>
+            </template>
           </div>
           
         </el-aside>
@@ -192,6 +191,10 @@ export default {
     clearable: {
       type: Boolean,
       default: false
+    },
+    layoutList: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

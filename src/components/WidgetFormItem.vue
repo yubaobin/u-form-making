@@ -5,7 +5,7 @@
       :label="element.name"
       @click.native.stop="handleSelectWidget(index)"
     >
-        <template v-if="element.type == 'input'">
+        <template v-if="element.type == 'text'">
           <el-input 
             v-model="element.options.defaultValue"
             :style="{width: element.options.width}"

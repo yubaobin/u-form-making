@@ -1,7 +1,21 @@
 export const basicComponents = [
   {
-    type: 'input',
+    type: 'text',
     name: '单行文本',
+    icon: 'icon-input',
+    options: {
+      width: '100%',
+      defaultValue: '',
+      required: false,
+      dataType: 'string',
+      pattern: '',
+      placeholder: '',
+      disabled: false,
+    }
+  },
+  {
+    type: 'password',
+    name: '密码框',
     icon: 'icon-input',
     options: {
       width: '100%',
@@ -30,6 +44,7 @@ export const basicComponents = [
     type: 'number',
     name: '计数器',
     icon: 'icon-number',
+    hidden: true,
     options: {
       width: '',
       required: false,
@@ -110,6 +125,7 @@ export const basicComponents = [
     type: 'time',
     name: '时间选择器',
     icon: 'icon-time',
+    hidden: true,
     options: {
       defaultValue: '21:19:56',
       readonly: false,
@@ -147,9 +163,30 @@ export const basicComponents = [
     }
   },
   {
+    type: 'date',
+    name: '时间选择器',
+    icon: 'icon-date',
+    options: {
+      defaultValue: '',
+      readonly: false,
+      disabled: false,
+      editable: true,
+      clearable: true,
+      placeholder: '',
+      startPlaceholder: '',
+      endPlaceholder: '',
+      type: 'datetime',
+      format: 'yyyy-MM-dd HH:mm:ss',
+      timestamp: false,
+      required: false,
+      width: '',
+    }
+  },
+  {
     type: 'rate',
     name: '评分',
     icon: 'icon-icon-test',
+    hidden: true,
     options: {
       defaultValue: null,
       max: 5,
@@ -162,6 +199,7 @@ export const basicComponents = [
     type: 'color',
     name: '颜色选择器',
     icon: 'icon-color',
+    hidden: true,
     options: {
       defaultValue: '',
       disabled: false,
@@ -170,7 +208,7 @@ export const basicComponents = [
     }
   },
   {
-    type: 'select',
+    type: 'list',
     name: '下拉选择框',
     icon: 'icon-select',
     options: {
@@ -206,6 +244,7 @@ export const basicComponents = [
     type: 'switch',
     name: '开关',
     icon: 'icon-switch',
+    hidden: true,
     options: {
       defaultValue: false,
       required: false,
@@ -216,6 +255,7 @@ export const basicComponents = [
     type: 'slider',
     name: '滑块',
     icon: 'icon-slider',
+    hidden: true,
     options: {
       defaultValue: 0,
       disabled: false,
@@ -235,6 +275,7 @@ export const advanceComponents = [
     type: 'blank',
     name: '自定义',
     icon: 'icon-ic',
+    hidden: true,
     options: {
       defaultType: 'String'
     }
@@ -276,6 +317,7 @@ export const advanceComponents = [
     type: 'cascader',
     name: '级联选择器',
     icon: 'icon-jilianxuanze',
+    hidden: true,
     options: {
       defaultValue: [],
       width: '',
