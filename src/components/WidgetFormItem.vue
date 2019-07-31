@@ -168,7 +168,20 @@
             
           </fm-upload>
         </template>
-
+  
+        <template v-if="element.type=='file'">
+          <el-upload
+            :file-list="element.options.defaultValue"
+            :disabled="element.options.disabled"
+            :style="{'width': element.options.width}"
+            :width="element.options.size.width"
+            :height="element.options.size.height"
+            action="xxx"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </template>
+    
         <template v-if="element.type == 'cascader'">
           <el-cascader
             v-model="element.options.defaultValue"

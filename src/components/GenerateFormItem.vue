@@ -184,6 +184,22 @@
       >
       </fm-upload>
     </template>
+    
+    <template v-if="widget.type=='file'">
+      <el-upload
+        :file-list="dataModel"
+        :disabled="widget.options.disabled"
+        :style="{'width': widget.options.width}"
+        :width="widget.options.size.width"
+        :height="widget.options.size.height"
+        :headers="widget.options.headers"
+        :multiple="widget.options.multiple"
+        :length="widget.options.length"
+        action="https://jsonplaceholder.typicode.com/posts/"
+      >
+        <el-button size="small" type="primary" :disabled="widget.options.disabled">点击上传</el-button>
+      </el-upload>
+    </template>
 
     <template v-if="widget.type == 'umeditor'">
       <fm-editor
@@ -238,7 +254,7 @@ export default {
       })
     }
 
-    if (this.widget.type === 'imgupload' && this.widget.options.isQiniu) {
+    if ((this.widget.type === 'image' || this.widget.type === 'file')  && this.widget.options.isQiniu) {
       this.remote[this.widget.options.tokenFunc]((data) => {
         this.widget.options.token = data
       })

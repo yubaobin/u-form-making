@@ -131,7 +131,6 @@ export const basicComponents = [
       readonly: false,
       disabled: false,
       editable: true,
-      clearable: true,
       placeholder: '',
       startPlaceholder: '',
       endPlaceholder: '',
@@ -151,7 +150,6 @@ export const basicComponents = [
       readonly: false,
       disabled: false,
       editable: true,
-      clearable: true,
       placeholder: '',
       startPlaceholder: '',
       endPlaceholder: '',
@@ -171,7 +169,6 @@ export const basicComponents = [
       readonly: false,
       disabled: false,
       editable: true,
-      clearable: true,
       placeholder: '',
       startPlaceholder: '',
       endPlaceholder: '',
@@ -215,7 +212,6 @@ export const basicComponents = [
       defaultValue: '',
       multiple: false,
       disabled: false,
-      clearable: false,
       placeholder: '',
       required: false,
       showLabel: false,
@@ -281,7 +277,7 @@ export const advanceComponents = [
     }
   },
   {
-    type: 'imgupload',
+    type: 'image',
     name: '图片',
     icon: 'icon-tupian',
     options: {
@@ -305,7 +301,23 @@ export const advanceComponents = [
     }
   },
   {
-    type: 'editor',
+    type: 'file',
+    name: '文件',
+    icon: 'icon-shangchuan',
+    options: {
+      defaultValue: [],
+      size: {
+        width: 100,
+        height: 100,
+      },
+      width: '',
+      disabled: false,
+      length: 8,
+      multiple: false
+    }
+  },
+  {
+    type: 'umeditor',
     name: '编辑器',
     icon: 'icon-fuwenbenkuang',
     options: {
@@ -323,7 +335,6 @@ export const advanceComponents = [
       width: '',
       placeholder: '',
       disabled: false,
-      clearable: false,
       remote: true,
       remoteOptions: [],
       props: {

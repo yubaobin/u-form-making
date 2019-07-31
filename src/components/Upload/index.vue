@@ -35,7 +35,7 @@
       @click.self="handleAdd"
     >
       <i class="el-icon-plus" @click.self="handleAdd" :style="{fontSize:miniWidth/4+'px',marginTop: (-miniWidth/8)+'px', marginLeft: (-miniWidth/8)+'px'}"></i>
-      <input accept="image/*" v-if="multiple"  multiple ref="uploadInput" @change="handleChange" type="file" :style="{width: 0, height: 0}" name="file" class="el-upload__input upload-input">
+      <input accept="image/*" v-if="multiple" multiple ref="uploadInput" @change="handleChange" type="file" :style="{width: 0, height: 0}" name="file" class="el-upload__input upload-input">
       <input accept="image/*" v-else ref="uploadInput" @change="handleChange" type="file" :style="{width:0, height: 0}" name="file" class="el-upload__input upload-input">
     </div>
   </div>

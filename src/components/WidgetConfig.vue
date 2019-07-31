@@ -38,10 +38,10 @@
       <el-form-item label="步长" v-if="Object.keys(data.options).indexOf('step')>=0">
         <el-input-number v-model="data.options.step" :min="0" :max="100" :step="1"></el-input-number>
       </el-form-item>
-      <el-form-item label="是否多选" v-if="data.type=='select' || data.type=='imgupload'">
+      <el-form-item label="是否多选" v-if="data.type=='list' || data.type=='image'">
         <el-switch v-model="data.options.multiple" @change="handleSelectMuliple"></el-switch>
       </el-form-item>
-      <el-form-item label="是否可搜索" v-if="data.type=='select'">
+      <el-form-item label="是否可搜索" v-if="data.type=='list'">
         <el-switch v-model="data.options.filterable"></el-switch>
       </el-form-item>
       <el-form-item label="允许半选" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
@@ -81,7 +81,7 @@
           </div>
         </template>
         <template v-else>
-          <template v-if="data.type=='radio' || (data.type=='select'&&!data.options.multiple)">
+          <template v-if="data.type=='radio' || (data.type=='list'&&!data.options.multiple)">
             <el-radio-group v-model="data.options.defaultValue">
               <draggable tag="ul" :list="data.options.options" 
                 v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
@@ -105,7 +105,7 @@
             </el-radio-group>
           </template>
 
-          <template v-if="data.type=='checkbox' || (data.type=='select' && data.options.multiple)">
+          <template v-if="data.type=='checkbox' || (data.type=='list' && data.options.multiple)">
             <el-checkbox-group v-model="data.options.defaultValue">
 
               <draggable tag="ul" :list="data.options.options" 
@@ -151,9 +151,9 @@
         </div>
       </el-form-item>
 
-      <el-form-item label="默认值" v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')">
+      <el-form-item label="默认值" v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'text' || data.type=='rate' || data.type=='color' || data.type=='switch')">
         <el-input v-if="data.type=='textarea'" type="textarea" :rows="5" v-model="data.options.defaultValue"></el-input>
-        <el-input v-if="data.type=='input'" v-model="data.options.defaultValue"></el-input>
+        <el-input v-if="data.type=='text'" v-model="data.options.defaultValue"></el-input>
         <el-rate v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;" :max="data.options.max" :allow-half="data.options.allowHalf" v-model="data.options.defaultValue"></el-rate>
         <el-button type="text" v-if="data.type == 'rate'" style="display:inline-block;vertical-align: middle;margin-left: 10px;" @click="data.options.defaultValue=0">清空</el-button>
         <el-color-picker 
@@ -224,7 +224,7 @@
         </el-form-item>
       </template>
 
-      <template v-if="data.type=='imgupload'">
+      <template v-if="data.type=='image'">
         
         <el-form-item label="最大上传数">
           <el-input type="number" v-model.number="data.options.length"></el-input>
