@@ -17,7 +17,7 @@
         高度：<el-input style="width: 90px;" type="number" v-model.number="data.options.size.height"></el-input>
       </el-form-item>
       
-      <el-form-item label="占位内容" v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')">
+      <el-form-item label="占位内容" v-if="Object.keys(data.options).indexOf('placeholder')>=0 && data.type!='time' && data.type!='date'">
         <el-input v-model="data.options.placeholder"></el-input>
       </el-form-item>
       <el-form-item label="布局方式" v-if="Object.keys(data.options).indexOf('inline')>=0">
@@ -41,7 +41,7 @@
       <el-form-item label="是否多选" v-if="data.type=='list' || data.type=='image'">
         <el-switch v-model="data.options.multiple" @change="handleSelectMuliple"></el-switch>
       </el-form-item>
-      <el-form-item label="是否可搜索" v-if="data.type=='list'">
+      <el-form-item label="是否可搜索" v-if="Object.keys(data.options).indexOf('filterable')>=0">
         <el-switch v-model="data.options.filterable"></el-switch>
       </el-form-item>
       <el-form-item label="允许半选" v-if="Object.keys(data.options).indexOf('allowHalf')>=0">
@@ -165,7 +165,7 @@
       </el-form-item>
 
       <template v-if="data.type == 'time' || data.type == 'date'">
-        <el-form-item label="显示类型" v-if="data.type == 'date'">
+        <el-form-item label="显示类型" v-if="false">
           <el-select v-model="data.options.type">
             <el-option value="year"></el-option>
             <el-option value="month"></el-option>
@@ -183,7 +183,7 @@
           >
           </el-switch>
         </el-form-item>
-        <el-form-item label="是否获取时间戳" v-if="data.type == 'date'">
+        <el-form-item label="是否获取时间戳" v-if="false">
           <el-switch
             v-model="data.options.timestamp"
           >
@@ -199,7 +199,7 @@
           <el-input v-model="data.options.endPlaceholder"></el-input>
         </el-form-item>
         <el-form-item label="格式">
-          <el-input v-model="data.options.format"></el-input>
+          <el-input v-model="data.options.format" disabled></el-input>
         </el-form-item>
         <el-form-item label="默认值" v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0">
           <el-time-picker 
@@ -229,7 +229,7 @@
         <el-form-item label="最大上传数">
           <el-input type="number" v-model.number="data.options.length"></el-input>
         </el-form-item>
-        <el-form-item label="使用七牛上传">
+        <el-form-item label="使用七牛上传" v-if="false">
           <el-switch v-model="data.options.isQiniu"></el-switch>
         </el-form-item>
         <template v-if="data.options.isQiniu">
@@ -295,8 +295,11 @@
           </el-select>
         </el-form-item>
       </template>
+  
+      <el-form-item label="css类名" v-if="Object.keys(data.options).indexOf('cssName')>=0">
+        <el-input v-model="data.options.cssName"></el-input>
+      </el-form-item>
       
-
       <template v-if="data.type != 'grid'">
         
         <el-form-item label="数据绑定Key">
@@ -305,31 +308,25 @@
         <el-form-item label="操作属性">
           <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</el-checkbox>
           <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</el-checkbox>
-          <el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</el-checkbox>
-          <el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</el-checkbox>
-          <el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</el-checkbox>
-          <el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</el-checkbox>
-          <el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑</el-checkbox>
+          <!--<el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</el-checkbox>-->
+          <!--<el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</el-checkbox>-->
+          <!--<el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</el-checkbox>-->
+          <!--<el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</el-checkbox>-->
+          <!--<el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑</el-checkbox>-->
           
         </el-form-item>
         <el-form-item label="校验">
           <div>
             <el-checkbox v-model="data.options.required">必填</el-checkbox>
           </div>
-          <el-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini" >
-            <el-option value="string" label="字符串"></el-option>
-            <el-option value="number" label="数字"></el-option>
-            <el-option value="boolean" label="布尔值"></el-option>
-            <el-option value="integer" label="整数"></el-option>
-            <el-option value="float" label="浮点数"></el-option>
-            <el-option value="url" label="URL地址"></el-option>
-            <el-option value="email" label="邮箱地址"></el-option>
-            <el-option value="hex" label="十六进制"></el-option>
-          </el-select>
-          
-          <div v-if="Object.keys(data.options).indexOf('pattern')>=0">
-            <el-input size="mini" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></el-input>
-          </div>
+          <template v-if="data.type !== 'password'">
+            <el-select v-if="Object.keys(data.options).indexOf('dataType')>=0" v-model="data.options.dataType" size="mini" >
+              <el-option v-for="(item, index) in dataType" :value="item.value" :label="item.text" :key="index"></el-option>
+            </el-select>
+            <!--<div v-if="Object.keys(data.options).indexOf('pattern')>=0">-->
+              <!--<el-input size="mini" v-model.lazy="data.options.pattern"  style=" width: 240px;" placeholder="填写正则表达式"></el-input>-->
+            <!--</div>-->
+          </template>
         </el-form-item>
       </template>
     </el-form>
@@ -343,7 +340,16 @@ export default {
   components: {
     Draggable
   },
-  props: ['data'],
+  props: {
+    data: {
+      type: Object,
+      default: () => {}
+    },
+    dataType: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       validator: {

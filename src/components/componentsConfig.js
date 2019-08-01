@@ -11,6 +11,7 @@ export const basicComponents = [
       pattern: '',
       placeholder: '',
       disabled: false,
+      cssName: 'form-input'
     }
   },
   {
@@ -25,6 +26,7 @@ export const basicComponents = [
       pattern: '',
       placeholder: '',
       disabled: false,
+      cssName: 'form-password'
     }
   },
   {
@@ -36,8 +38,8 @@ export const basicComponents = [
       defaultValue: '',
       required: false,
       disabled: false,
-      pattern: '',
-      placeholder: ''
+      placeholder: '',
+      cssName: 'form-textarea'
     }
   },
   {
@@ -53,7 +55,8 @@ export const basicComponents = [
       max: '',
       step: 1,
       disabled: false,
-      controlsPosition: ''
+      controlsPosition: '',
+      cssName: 'form-number'
     }
   },
   {
@@ -61,9 +64,7 @@ export const basicComponents = [
     name: '单选框组',
     icon: 'icon-radio-active',
     options: {
-      inline: false,
       defaultValue: '',
-      showLabel: false,
       options: [
         {
           value: '选项1',
@@ -88,6 +89,7 @@ export const basicComponents = [
       },
       remoteFunc: '',
       disabled: false,
+      cssName: 'form-radio'
     }
   },
   {
@@ -95,9 +97,7 @@ export const basicComponents = [
     name: '多选框组',
     icon: 'icon-check-box',
     options: {
-      inline: false,
       defaultValue: [],
-      showLabel: false,
       options: [
         {
           value: '选项1'
@@ -119,6 +119,7 @@ export const basicComponents = [
       },
       remoteFunc: '',
       disabled: false,
+      cssName: 'form-checkbox'
     }
   },
   {
@@ -130,7 +131,6 @@ export const basicComponents = [
       defaultValue: '21:19:56',
       readonly: false,
       disabled: false,
-      editable: true,
       placeholder: '',
       startPlaceholder: '',
       endPlaceholder: '',
@@ -139,6 +139,7 @@ export const basicComponents = [
       format: 'HH:mm:ss',
       required: false,
       width: '',
+      cssName: 'form-time'
     }
   },
   {
@@ -149,13 +150,9 @@ export const basicComponents = [
       defaultValue: '',
       readonly: false,
       disabled: false,
-      editable: true,
       placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
       type: 'date',
       format: 'yyyy-MM-dd',
-      timestamp: false,
       required: false,
       width: '',
     }
@@ -168,15 +165,12 @@ export const basicComponents = [
       defaultValue: '',
       readonly: false,
       disabled: false,
-      editable: true,
       placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
       type: 'datetime',
       format: 'yyyy-MM-dd HH:mm:ss',
-      timestamp: false,
       required: false,
       width: '',
+      cssName: 'form-date'
     }
   },
   {
@@ -189,7 +183,8 @@ export const basicComponents = [
       max: 5,
       disabled: false,
       allowHalf: false,
-      required: false
+      required: false,
+      cssName: 'form-rate'
     }
   },
   {
@@ -201,7 +196,8 @@ export const basicComponents = [
       defaultValue: '',
       disabled: false,
       showAlpha: false,
-      required: false
+      required: false,
+      cssName: 'form-color'
     }
   },
   {
@@ -227,13 +223,13 @@ export const basicComponents = [
         }
       ],
       remote: false,
-      filterable: false,
       remoteOptions: [],
       props: {
         value: 'value',
         label: 'label'
       },
-      remoteFunc: ''
+      remoteFunc: '',
+      cssName: 'form-select'
     }
   },
   {
@@ -245,6 +241,7 @@ export const basicComponents = [
       defaultValue: false,
       required: false,
       disabled: false,
+      cssName: 'form-switch'
     }
   },
   {
@@ -261,7 +258,8 @@ export const basicComponents = [
       step: 1,
       showInput: false,
       range: false,
-      width: ''
+      width: '',
+      cssName: 'form-slider'
     }
   }
 ]
@@ -297,7 +295,8 @@ export const advanceComponents = [
       isDelete: false,
       min: 0,
       isEdit: false,
-      action: 'https://jsonplaceholder.typicode.com/photos/'
+      action: 'https://jsonplaceholder.typicode.com/photos/',
+      cssName: 'form-tupian'
     }
   },
   {
@@ -313,7 +312,9 @@ export const advanceComponents = [
       width: '',
       disabled: false,
       length: 8,
-      multiple: false
+      action: 'https://jsonplaceholder.typicode.com/photos/',
+      multiple: false,
+      cssName: 'form-file'
     }
   },
   {
@@ -322,7 +323,8 @@ export const advanceComponents = [
     icon: 'icon-fuwenbenkuang',
     options: {
       defaultValue: '',
-      width: ''
+      width: '',
+      cssName: 'form-ueditor'
     }
   },
   {
@@ -342,7 +344,8 @@ export const advanceComponents = [
         label: 'label',
         children: 'children'
       },
-      remoteFunc: ''
+      remoteFunc: '',
+      cssName: 'form-cascader'
     }
   }
 ]
