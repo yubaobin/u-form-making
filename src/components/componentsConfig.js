@@ -7,6 +7,7 @@ export const basicComponents = [
       width: '100%',
       defaultValue: '',
       required: false,
+      readonly: false,
       dataType: 'string',
       pattern: '',
       placeholder: '',
