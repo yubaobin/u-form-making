@@ -76,7 +76,7 @@
               <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-show="configTab=='widget'" :dataType="dataType" :data="widgetFormSelect"></widget-config>
+              <widget-config v-show="configTab=='widget'" :dictData="dictData" :validFun="validFun" :dataType="dataType" :data="widgetFormSelect"></widget-config>
               <form-config v-show="configTab=='form'" :data="widgetForm.config"></form-config>
             </el-main>
           </el-container>
@@ -208,6 +208,20 @@ export default {
         { value: 'email', text: '邮箱地址' },
         { value: 'hex', text: '十六进制' },
       ]
+    },
+    validFun: {
+      type: [Function, Boolean],
+      default: false
+    },
+    token: String,
+    tokenName: 'X-Access-Token',
+    dictData: {
+      type: Object,
+      default: () => {}
+    },
+    dictFun: {
+      type: [Function, String],
+      default: ''
     }
   },
   data () {
@@ -231,6 +245,8 @@ export default {
       codeVisible: false,
       uploadVisible: false,
       remoteFuncs: {
+        token: '',
+        tokenName: '',
         func_test (resolve) {
           setTimeout(() => {
             const options = [
@@ -249,7 +265,8 @@ export default {
         },
         upload_callback (response, file, fileList) {
           console.log('callback', response, file, fileList)
-        }
+        },
+        dictFun: ''
       },
       widgetModels: {},
       blank: '',
@@ -306,6 +323,11 @@ export default {
   }
 }`
     }
+  },
+  created () {
+    this.remoteFuncs.token = this.token
+    this.remoteFuncs.tokenName = this.tokenName
+    this.remoteFuncs.dictFun = this.dictFun
   },
   mounted () {
   },

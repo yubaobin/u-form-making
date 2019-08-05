@@ -110,6 +110,7 @@ export default {
           ...this.data.list[newIndex].options,
           remoteFunc: 'func_' + key
         },
+        isAdd: true,
         key,
         // 绑定键值
         model: this.data.list[newIndex].type + '_' + key,
@@ -136,6 +137,7 @@ export default {
       }
 
       this.selectWidget = this.data.list[newIndex]
+      
     },
     handleWidgetColAdd ($event, row, colIndex) {
       console.log('coladd', $event, row, colIndex)
@@ -164,6 +166,7 @@ export default {
           ...row.columns[colIndex].list[newIndex].options,
           remoteFunc: 'func_' + key
         },
+        isAdd: true,
         key,
         // 绑定键值
         model: row.columns[colIndex].list[newIndex].type + '_' + key,

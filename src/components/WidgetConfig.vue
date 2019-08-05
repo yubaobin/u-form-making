@@ -63,11 +63,63 @@
         </el-switch>
       </el-form-item>
       <el-form-item label="选项" v-if="Object.keys(data.options).indexOf('options')>=0">
-        <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
-          <el-radio-button :label="false">静态数据</el-radio-button>
-          <el-radio-button :label="true">远端数据</el-radio-button>
+        <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;display: block;">
+          <!--<el-radio-button :label="1">静态数据</el-radio-button>-->
+          <!--<el-radio-button :label="2">远端数据</el-radio-button>-->
+          <el-radio-button :label="3">字典数据</el-radio-button>
         </el-radio-group>
-        <template v-if="data.options.remote">
+        <template v-if="data.options.remote === 1">
+          <template v-if="data.type=='radio' || (data.type=='list'&&!data.options.multiple)">
+            <el-radio-group v-model="data.options.defaultValue">
+              <draggable tag="ul" :list="data.options.options"
+                         v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
+                         handle=".drag-item"
+              >
+                <li v-for="(item, index) in data.options.options" :key="index" >
+                  <el-radio
+                    :label="item.value"
+                    style="margin-right: 5px;"
+                  >
+                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
+                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
+                    <!-- <input v-model="item.value"/> -->
+                  </el-radio>
+                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
+                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
+          
+                </li>
+              </draggable>
+      
+            </el-radio-group>
+          </template>
+    
+          <template v-if="data.type=='checkbox' || (data.type=='list' && data.options.multiple)">
+            <el-checkbox-group v-model="data.options.defaultValue">
+        
+              <draggable tag="ul" :list="data.options.options"
+                         v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
+                         handle=".drag-item"
+              >
+                <li v-for="(item, index) in data.options.options" :key="index" >
+                  <el-checkbox
+                    :label="item.value"
+                    style="margin-right: 5px;"
+                  >
+                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
+                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
+                  </el-checkbox>
+                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
+                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
+          
+                </li>
+              </draggable>
+            </el-checkbox-group>
+          </template>
+          <div style="margin-left: 22px;">
+            <el-button type="text" @click="handleAddOption">添加选项</el-button>
+          </div>
+        </template>
+        <template v-else-if="data.options.remote === 2">
           <div>
             <el-input size="mini" style="" v-model="data.options.remoteFunc">
               <template slot="prepend">远端方法</template>
@@ -80,58 +132,11 @@
             </el-input>
           </div>
         </template>
-        <template v-else>
-          <template v-if="data.type=='radio' || (data.type=='list'&&!data.options.multiple)">
-            <el-radio-group v-model="data.options.defaultValue">
-              <draggable tag="ul" :list="data.options.options" 
-                v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                handle=".drag-item"
-              >
-                <li v-for="(item, index) in data.options.options" :key="index" >
-                  <el-radio
-                    :label="item.value" 
-                    style="margin-right: 5px;"
-                  >
-                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
-                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
-                    <!-- <input v-model="item.value"/> -->
-                  </el-radio>
-                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-                  
-                </li>
-              </draggable>
-              
-            </el-radio-group>
-          </template>
-
-          <template v-if="data.type=='checkbox' || (data.type=='list' && data.options.multiple)">
-            <el-checkbox-group v-model="data.options.defaultValue">
-
-              <draggable tag="ul" :list="data.options.options" 
-                v-bind="{group:{ name:'options'}, ghostClass: 'ghost',handle: '.drag-item'}"
-                handle=".drag-item"
-              >
-                <li v-for="(item, index) in data.options.options" :key="index" >
-                  <el-checkbox
-                    :label="item.value"
-                    style="margin-right: 5px;"
-                  >
-                    <el-input :style="{'width': data.options.showLabel? '90px': '180px' }" size="mini" v-model="item.value"></el-input>
-                    <el-input style="width:90px;" size="mini" v-if="data.options.showLabel" v-model="item.label"></el-input>
-                  </el-checkbox>
-                  <i class="drag-item" style="font-size: 16px;margin: 0 5px;cursor: move;"><i class="iconfont icon-icon_bars"></i></i>
-                  <el-button @click="handleOptionsRemove(index)" circle plain type="danger" size="mini" icon="el-icon-minus" style="padding: 4px;margin-left: 5px;"></el-button>
-                  
-                </li>
-              </draggable>
-            </el-checkbox-group>
-          </template>
-          <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddOption">添加选项</el-button>
-          </div>
+        <template v-else-if="data.options.remote === 3">
+          <el-select v-model="data.options.dictField">
+            <el-option v-for="(item, index) in dictData.list" :key="index" :value="item[dictData.value]" :label="item[dictData.text]"></el-option>
+          </el-select>
         </template>
-        
       </el-form-item>
 
       <el-form-item label="远端数据" v-if="data.type=='cascader'">
@@ -306,14 +311,17 @@
           <el-input v-model="data.model"></el-input>
         </el-form-item>
         <el-form-item label="操作属性">
-          <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</el-checkbox>
-          <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</el-checkbox>
+          <!--<el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</el-checkbox>-->
+          <!--<el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</el-checkbox>-->
           <!--<el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</el-checkbox>-->
           <!--<el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</el-checkbox>-->
           <!--<el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</el-checkbox>-->
           <!--<el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</el-checkbox>-->
           <!--<el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑</el-checkbox>-->
-          
+          <el-checkbox-group :max="1" v-model="data.options.operationAtt" v-if="Object.keys(data.options).indexOf('operationAtt')>=0">
+            <el-checkbox :label="1" key="1">完全只读</el-checkbox>
+            <el-checkbox :label="2" key="2">禁用</el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item label="校验">
           <div>
@@ -348,6 +356,20 @@ export default {
     dataType: {
       type: Array,
       default: () => []
+    },
+    validFun: {
+      type: [Function, Boolean],
+      default: false
+    },
+    dictData: {
+      type: Object,
+      default: () => {
+        return {
+          list: [],
+          value: 'value',
+          text: 'text'
+        }
+      }
     }
   },
   data () {
@@ -440,12 +462,11 @@ export default {
         return false
       }
       
-      if (val) {
-        this.validator.type = {type: val, message: this.data.name + '格式不正确'}
+      if (val && this.validFun) {
+        this.validator.type = this.validFun(val)
       } else {
         this.validator.type = null
       }
-
       this.generateRule()
     },
     valiatePattern (val) {

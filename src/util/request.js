@@ -26,3 +26,8 @@ request.interceptors.response.use(
 )
 
 export default request
+
+export const httpGet = (url, params) => {
+  request.defaults.headers[params.tokenName] = params.token
+  return request.get(url)
+}

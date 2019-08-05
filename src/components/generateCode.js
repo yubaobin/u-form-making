@@ -12,7 +12,7 @@ function findRemoteFunc (list, funcList, tokenFuncList, blankList) {
             label: list[i].name
           })
         }
-      } else if (list[i].type == 'imgupload') {
+      } else if (list[i].type == 'image' || list[i].type == 'file') {
         if (list[i].options.tokenFunc) {
           tokenFuncList.push({
             func: list[i].options.tokenFunc,
@@ -92,7 +92,7 @@ export default function (data) {
     </div>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="https://unpkg.com/form-making/dist/FormMaking.umd.js"></script>
+    <script src="https://unpkg.com/u-form-making/dist/FormMaking.umd.js"></script>
     <script>
       new Vue({
         el: '#app',

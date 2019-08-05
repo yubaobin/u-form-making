@@ -2,7 +2,7 @@
   <el-form-item :label="widget.name" :prop="widget.model">
     <template v-if="widget.type == 'text'" >
       <el-input 
-        v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
+        v-if="widget.options.dataType == 'n6-18' || widget.options.dataType == 'n' || widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
         :type="widget.options.dataType"
         v-model.number="dataModel"
         :placeholder="widget.options.placeholder"
@@ -70,7 +70,7 @@
         <el-checkbox
           
           :style="{display: widget.options.inline ? 'inline-block' : 'block'}"
-          :label="item.value" v-for="(item, index) in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="index"
+          :label="item.value" v-for="(item, index) in (isRemote ? widget.options.remoteOptions : widget.options.options)" :key="index"
         >
           <template v-if="widget.options.remote">{{item.label}}</template>
           <template v-else>{{widget.options.showLabel ? item.label : item.value}}</template>
@@ -140,7 +140,7 @@
         :style="{width: widget.options.width}"
         :filterable="widget.options.filterable"
       >
-        <el-option v-for="item in (widget.options.remote ? widget.options.remoteOptions : widget.options.options)" :key="item.value" :value="item.value" :label="widget.options.showLabel || widget.options.remote?item.label:item.value"></el-option>
+        <el-option v-for="item in (isRemote ? widget.options.remoteOptions : widget.options.options)" :key="item.value" :value="item.value" :label="widget.options.showLabel || widget.options.remote?item.label:item.value"></el-option>
       </el-select>
     </template>
 
@@ -242,7 +242,7 @@ export default {
     }
   },
   created () {
-    if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
+    if (this.widget.options.remote === 2 && this.remote[this.widget.options.remoteFunc]) {
       this.remote[this.widget.options.remoteFunc]((data) => {
         this.widget.options.remoteOptions = data.map(item => {
           return {
@@ -251,9 +251,21 @@ export default {
             children: item[this.widget.options.props.children]
           }
         })
+        this.$forceUpdate()
       })
     }
-
+    if (this.widget.options.remote === 3) { // 字典数据
+      const { dictFun } = this.remote
+      dictFun && dictFun(this.widget.options.dictField).then(res => {
+        this.widget.options.remoteOptions = res.result.map(item => {
+          return {
+            value: item[this.widget.options.props.value],
+            label: item[this.widget.options.props.label]
+          }
+        })
+        this.$forceUpdate()
+      })
+    }
     if ((this.widget.type === 'image' || this.widget.type === 'file')  && this.widget.options.isQiniu) {
       this.remote[this.widget.options.tokenFunc]((data) => {
         this.widget.options.token = data
@@ -261,6 +273,11 @@ export default {
     }
   },
   methods: {
+  },
+  computed: {
+    isRemote () {
+      return (this.widget.options.remote === 2 || this.widget.options.remote === 3)
+    }
   },
   watch: {
     dataModel: {

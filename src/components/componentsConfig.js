@@ -8,10 +8,11 @@ export const basicComponents = [
       defaultValue: '',
       required: false,
       readonly: false,
-      dataType: 'string',
+      dataType: '',
       pattern: '',
       placeholder: '',
       disabled: false,
+      operationAtt: [],
       cssName: 'form-input'
     }
   },
@@ -23,7 +24,7 @@ export const basicComponents = [
       width: '100%',
       defaultValue: '',
       required: false,
-      dataType: 'string',
+      dataType: '',
       pattern: '',
       placeholder: '',
       disabled: false,
@@ -82,8 +83,9 @@ export const basicComponents = [
       ],
       required: false,
       width: '',
-      remote: false,
+      remote: 3,
       remoteOptions: [],
+      dictField: '',
       props: {
         value: 'value',
         label: 'label'
@@ -112,8 +114,9 @@ export const basicComponents = [
       ],
       required: false,
       width: '',
-      remote: false,
+      remote: 3,
       remoteOptions: [],
+      dictField: '',
       props: {
         value: 'value',
         label: 'label'
@@ -132,6 +135,7 @@ export const basicComponents = [
       defaultValue: '21:19:56',
       readonly: false,
       disabled: false,
+      operationAtt: [],
       placeholder: '',
       startPlaceholder: '',
       endPlaceholder: '',
@@ -151,6 +155,7 @@ export const basicComponents = [
       defaultValue: '',
       readonly: false,
       disabled: false,
+      operationAtt: [],
       placeholder: '',
       type: 'date',
       format: 'yyyy-MM-dd',
@@ -166,6 +171,7 @@ export const basicComponents = [
       defaultValue: '',
       readonly: false,
       disabled: false,
+      operationAtt: [],
       placeholder: '',
       type: 'datetime',
       format: 'yyyy-MM-dd HH:mm:ss',
@@ -223,7 +229,8 @@ export const basicComponents = [
           value: '下拉框3'
         }
       ],
-      remote: false,
+      dictField: '',
+      remote: 3,
       remoteOptions: [],
       props: {
         value: 'value',
