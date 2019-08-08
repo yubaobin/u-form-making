@@ -38,9 +38,11 @@
       <el-form-item label="步长" v-if="Object.keys(data.options).indexOf('step')>=0">
         <el-input-number v-model="data.options.step" :min="0" :max="100" :step="1"></el-input-number>
       </el-form-item>
-      <el-form-item label="是否多选" v-if="data.type=='list' || data.type=='image'">
-        <el-switch v-model="data.options.multiple" @change="handleSelectMuliple"></el-switch>
-      </el-form-item>
+      <template v-if="false">
+        <el-form-item label="是否多选" v-if="data.type=='list' || data.type=='image'">
+          <el-switch v-model="data.options.multiple" @change="handleSelectMuliple"></el-switch>
+        </el-form-item>
+      </template>
       <el-form-item label="是否可搜索" v-if="Object.keys(data.options).indexOf('filterable')>=0">
         <el-switch v-model="data.options.filterable"></el-switch>
       </el-form-item>
@@ -308,17 +310,22 @@
       <template v-if="data.type != 'grid'">
         
         <el-form-item label="数据绑定Key">
-          <el-input v-model="data.model"></el-input>
+          <el-select v-if="modelList.length" v-model="data.model">
+            <el-option v-for="(item, index) in modelList" :key="index" :value="item.value" :label="item.text"></el-option>
+          </el-select>
+          <el-input v-else="" v-model="data.model"></el-input>
         </el-form-item>
-        <el-form-item label="操作属性">
-          <!--<el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</el-checkbox>-->
-          <!--<el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑</el-checkbox>-->
-          <el-checkbox-group :max="1" v-model="data.options.operationAtt" v-if="Object.keys(data.options).indexOf('operationAtt')>=0">
+        <el-form-item label="操作属性" v-if="false">
+          <el-checkbox v-model="data.options.readonly" v-if="Object.keys(data.options).indexOf('readonly')>=0">完全只读</el-checkbox>
+          <el-checkbox v-model="data.options.disabled" v-if="Object.keys(data.options).indexOf('disabled')>=0">禁用	</el-checkbox>
+          <el-checkbox v-model="data.options.editable" v-if="Object.keys(data.options).indexOf('editable')>=0">文本框可输入</el-checkbox>
+          <el-checkbox v-model="data.options.clearable" v-if="Object.keys(data.options).indexOf('clearable')>=0">显示清除按钮</el-checkbox>
+          <el-checkbox v-model="data.options.arrowControl" v-if="Object.keys(data.options).indexOf('arrowControl')>=0">使用箭头进行时间选择</el-checkbox>
+          <el-checkbox v-model="data.options.isDelete" v-if="Object.keys(data.options).indexOf('isDelete')>=0">删除</el-checkbox>
+          <el-checkbox v-model="data.options.isEdit" v-if="Object.keys(data.options).indexOf('isEdit')>=0">编辑</el-checkbox>
+        </el-form-item>
+        <el-form-item label="操作属性" v-if="Object.keys(data.options).indexOf('operationAtt')>=0">
+          <el-checkbox-group :max="1" v-model="data.options.operationAtt">
             <el-checkbox :label="1" key="1">完全只读</el-checkbox>
             <el-checkbox :label="2" key="2">禁用</el-checkbox>
           </el-checkbox-group>
@@ -360,6 +367,10 @@ export default {
     validFun: {
       type: [Function, Boolean],
       default: false
+    },
+    modelList: {
+      type: Array,
+      default: () => []
     },
     dictData: {
       type: Object,
@@ -509,6 +520,9 @@ export default {
         this.validateDataType(this.data.options.dataType)
         this.valiatePattern(this.data.options.pattern)
       }
+    },
+    'data.model': function (val) {
+      this.$emit('changeModel', val)
     }
   }
 }

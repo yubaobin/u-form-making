@@ -37,7 +37,8 @@
                             :element="el" 
                             :select.sync="selectWidget" 
                             :index="i" 
-                            :data="col">
+                            :data="col"
+                            @onDelete="onDelete">
                           </widget-form-item>
                         </transition-group>
                         
@@ -54,7 +55,7 @@
                 </el-row>
             </template>
             <template v-else>
-              <widget-form-item v-if="element && element.key"  :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data"></widget-form-item>
+              <widget-form-item v-if="element && element.key" @onSelect="onSelect" @onDelete="onDelete" :key="element.key" :element="element" :select.sync="selectWidget" :index="index" :data="data"></widget-form-item>
             </template>
           </template>
         </transition-group>
@@ -94,6 +95,7 @@ export default {
     handleSelectWidget (index) {
       console.log(index, '#####')
       this.selectWidget = this.data.list[index]
+      this.$emit('onSelect', this.selectWidget)
     },
     handleWidgetAdd (evt) {
       console.log('add', evt)
@@ -137,7 +139,7 @@ export default {
       }
 
       this.selectWidget = this.data.list[newIndex]
-      
+      this.$emit('onAdd', this.selectWidget)
     },
     handleWidgetColAdd ($event, row, colIndex) {
       console.log('coladd', $event, row, colIndex)
@@ -186,8 +188,10 @@ export default {
       }
 
       this.selectWidget = row.columns[colIndex].list[newIndex]
+      this.$emit('onAdd', this.selectWidget)
     },
     handleWidgetDelete (index) {
+      const deleted = this.selectWidget
       if (this.data.list.length - 1 === index) {
         if (index === 0) {
           this.selectWidget = {}
@@ -200,8 +204,15 @@ export default {
 
       this.$nextTick(() => {
         this.data.list.splice(index, 1)
+        this.$emit('onDelete', deleted, this.selectWidget)
       })
     },
+    onDelete (deleted, selectWidget) {
+      this.$emit('onDelete', deleted, selectWidget)
+    },
+    onSelect (item) {
+      this.$emit('onSelect', item)
+    }
   },
   watch: {
     select (val) {

@@ -88,7 +88,7 @@ export const basicComponents = [
       dictField: '',
       props: {
         value: 'value',
-        label: 'label'
+        label: 'text'
       },
       remoteFunc: '',
       disabled: false,
@@ -119,7 +119,7 @@ export const basicComponents = [
       dictField: '',
       props: {
         value: 'value',
-        label: 'label'
+        label: 'text'
       },
       remoteFunc: '',
       disabled: false,
@@ -234,7 +234,7 @@ export const basicComponents = [
       remoteOptions: [],
       props: {
         value: 'value',
-        label: 'label'
+        label: 'text'
       },
       remoteFunc: '',
       cssName: 'form-select'
@@ -349,7 +349,7 @@ export const advanceComponents = [
       remoteOptions: [],
       props: {
         value: 'value',
-        label: 'label',
+        label: 'text',
         children: 'children'
       },
       remoteFunc: '',

@@ -241,8 +241,10 @@ export default {
   methods: {
     handleSelectWidget (index) {
       this.selectWidget = this.data.list[index]
+      this.$emit('onSelect', this.selectWidget)
     },
     handleWidgetDelete (index) {
+      const deleted = this.selectWidget
       if (this.data.list.length - 1 === index) {
         if (index === 0) {
           this.selectWidget = {}
@@ -255,6 +257,7 @@ export default {
 
       this.$nextTick(() => {
         this.data.list.splice(index, 1)
+        this.$emit('onDelete', deleted, this.selectWidget)
       })
     },
     handleWidgetClone (index) {

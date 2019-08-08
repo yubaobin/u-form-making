@@ -65,7 +65,7 @@
           </el-header>
           <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
             
-            <widget-form v-if="!resetJson"  ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
+            <widget-form v-if="!resetJson" @onDelete="onDelete" @onAdd="onAdd" @onSelect="onSelect" ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect"></widget-form>
           </el-main>
         </el-container>
         
@@ -76,7 +76,14 @@
               <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">表单属性</div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-show="configTab=='widget'" :dictData="dictData" :validFun="validFun" :dataType="dataType" :data="widgetFormSelect"></widget-config>
+              <widget-config
+                v-show="configTab=='widget'"
+                :dictData="dictData"
+                :validFun="validFun"
+                :dataType="dataType"
+                :data="widgetFormSelect"
+                :modelList="modelList"
+                @changeModel="changeModel"></widget-config>
               <form-config v-show="configTab=='form'" :data="widgetForm.config"></form-config>
             </el-main>
           </el-container>
@@ -222,6 +229,10 @@ export default {
     dictFun: {
       type: [Function, String],
       default: ''
+    },
+    modelList: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -433,6 +444,19 @@ export default {
     handleInput (val) {
       console.log(val)
       this.blank = val
+    },
+    onDelete (deleted, selectWidget) {
+      this.$emit('onDelete', deleted, selectWidget)
+    },
+    onAdd (item) {
+      this.$emit('onAdd', item)
+    },
+    onSelect (item) {
+      this.$emit('onSelect', item)
+    },
+    changeModel (val) {
+      console.log(val)
+      this.$emit('changeModel', val)
     }
   },
   watch: {
