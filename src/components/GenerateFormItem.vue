@@ -253,7 +253,7 @@ export default {
         this.$forceUpdate()
       })
     }
-    if (this.widget.options.remote === 3) { // 字典数据
+    if (this.widget.options.remote === 3 || this.widget.options.dictField) { // 字典数据
       const { dictFun } = this.remote
       dictFun && dictFun(this.widget.options.dictField).then(res => {
         this.widget.options.remoteOptions = res.result.map(item => {
