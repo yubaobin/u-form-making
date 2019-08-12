@@ -21,7 +21,7 @@
                 <el-form-item v-if="citem.type=='blank'" :label="citem.name" :prop="citem.model" :key="citem.key">
                   <slot :name="citem.model" :model="models"></slot>
                 </el-form-item>
-                <genetate-form-item v-else :key="citem.key" :models.sync="models" :remote="remote" :token="token" :rules="rules" :widget="citem"></genetate-form-item>
+                <genetate-form-item v-else :key="citem.key" :models.sync="models" :remote="remote" :rules="rules" :widget="citem"></genetate-form-item>
               </template>
             </el-col>
           </el-row>
@@ -44,6 +44,7 @@
 
 <script>
 import GenetateFormItem from './GenerateFormItem'
+import request from '../util/request.js'
 import {loadJs} from '../util/index.js'
 
 export default {
@@ -51,7 +52,7 @@ export default {
   components: {
     GenetateFormItem
   },
-  props: ['data', 'remote', 'value', 'insite', 'token'],
+  props: ['data', 'remote', 'value', 'insite'],
   data () {
     return {
       models: {},
@@ -64,6 +65,18 @@ export default {
   mounted () {
   },
   methods: {
+    validOnly (rule, value, callback) {
+      const { validOnly } = this.remote
+      if (validOnly) {
+        validOnly({ value: value, fieldName: rule.fullField }, () => {
+          callback()
+        }, (msg) => {
+          callback(new Error(msg))
+        })
+      } else {
+        callback()
+      }
+    },
     generateModle (genList) {
       for (let i = 0; i < genList.length; i++) {
         if (genList[i].type === 'grid') {
@@ -86,6 +99,8 @@ export default {
             this.rules[genList[i].model] = [...this.rules[genList[i].model], ...genList[i].rules.map(item => {
               if (item.pattern) {
                 return {...item, pattern: eval(item.pattern)}
+              } else if (item.validOnly) {
+                return {...item, validator: this.validOnly }
               } else {
                 return {...item}
               }

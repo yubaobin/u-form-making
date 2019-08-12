@@ -221,7 +221,10 @@ export default {
       default: false
     },
     token: String,
-    tokenName: 'X-Access-Token',
+    tokenName: {
+      type: String,
+      default: 'X-Access-Token'
+    },
     dictData: {
       type: Object,
       default: () => {}

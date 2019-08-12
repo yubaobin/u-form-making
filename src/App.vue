@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div  class="fm-container"><router-view/></div>
+    <div class="fm-container"><router-view/></div>
   </div>
 </template>
 

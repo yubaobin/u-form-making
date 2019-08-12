@@ -255,8 +255,8 @@ export default {
     }
     if (this.widget.options.remote === 3 || this.widget.options.dictField) { // 字典数据
       const { dictFun } = this.remote
-      dictFun && dictFun(this.widget.options.dictField).then(res => {
-        this.widget.options.remoteOptions = res.result.map(item => {
+      dictFun && dictFun(this.widget.options.dictField, data => {
+        this.widget.options.remoteOptions = data.map(item => {
           return {
             value: item[this.widget.options.props.value],
             label: item[this.widget.options.props.label]
