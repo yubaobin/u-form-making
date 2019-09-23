@@ -102,8 +102,11 @@ export default {
       tinymce.get(this.id).destroy();
   },
   watch: {
-    value (val) {
-      this.content = val
+    value: {
+      immediate: true,
+      handler(val) {
+        this.content = val
+      }
     }
   }
 }

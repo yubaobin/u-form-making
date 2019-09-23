@@ -293,6 +293,7 @@ export default {
     },
     models: {
       deep: true,
+      immediate: true,
       handler (val) {
         this.dataModel = val[this.widget.model]
       }
