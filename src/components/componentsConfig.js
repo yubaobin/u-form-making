@@ -330,6 +330,7 @@ export const advanceComponents = [
     name: '编辑器',
     icon: 'icon-fuwenbenkuang',
     options: {
+      disabled: false,
       defaultValue: '',
       width: '',
       cssName: 'form-ueditor'

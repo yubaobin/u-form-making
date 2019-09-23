@@ -201,7 +201,9 @@
     </template>
 
     <template v-if="widget.type == 'umeditor'">
+      <div v-if="widget.options.disabled" v-html="dataModel"></div>
       <fm-editor
+        v-else=""
         v-model="dataModel"
         :width="widget.options.width"
         :height="widget.options.height"

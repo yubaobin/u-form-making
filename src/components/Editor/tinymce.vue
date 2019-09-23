@@ -58,10 +58,10 @@ export default {
   },
   mounted () {
     const _this = this
-
+    const language_url = process.env.NODE_ENV === 'development' ? '/lib/tinymce' : '/tinymce/langs'
     tinymce.init({
         selector:'#'+_this.id,
-        language_url: 'http://tools.xiaoyaoji.cn/form/lib/tinymce/zh_CN.js',
+        language_url: `${language_url}/zh_CN.js`,
         language: 'zh_CN',
         // skin_url: 'lib/tinymce/skins/lightgray',
         height: this.height,
